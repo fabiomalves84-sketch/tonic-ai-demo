@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Tonic Task Assistant</title>
+  <meta name="description" content="Protótipo interativo: converte texto em linguagem natural em tarefas estruturadas — proposta de funcionalidade IA para a Tonic." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<main>
+
+  <section class="hero">
+    <div class="bubbles" id="bubbles" aria-hidden="true"></div>
+    <div class="eyebrow">Proposta de funcionalidade IA para a Tonic</div>
+    <h1>Texto solto entra. <span class="glow-word">Tarefa nítida</span> sai.</h1>
+    <p>Tal como a água tónica revela o seu brilho sob luz UV, esta funcionalidade revela a estrutura escondida dentro de uma frase escrita à pressa — data, hora, prioridade e responsável, extraídos automaticamente. Experimenta em baixo.</p>
+  </section>
+
+  <section class="section">
+    <div class="kicker">Demonstração ao vivo</div>
+    <h2>Escreve como falas. A Tonic organiza.</h2>
+    <p class="lead">Sem formulários, sem menus. O utilizador escreve uma frase natural e a IA cria a tarefa já preenchida — pronta para entrar no board da equipa.</p>
+
+    <div class="demo-grid">
+      <div class="panel">
+        <div class="panel-label">Entrada — linguagem natural</div>
+        <textarea id="input" class="mono" placeholder="ex: liga ao fornecedor amanhã às 10h, prioridade alta"></textarea>
+        <div class="chips" id="chips"></div>
+        <button class="btn" id="submit">Criar tarefa com IA →</button>
+      </div>
+
+      <div class="panel">
+        <div class="panel-label">Saída — tarefa estruturada</div>
+        <div class="tasklist" id="tasklist"></div>
+        <div class="empty-hint">As tarefas mais recentes aparecem no topo.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="kicker">Como funciona</div>
+    <h2>Três passos, zero fricção</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <h3>Captura</h3>
+        <p>O utilizador escreve a tarefa como pensa nela — numa nota, num chat, num comando de voz transcrito.</p>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h3>Interpretação</h3>
+        <p>O motor de linguagem identifica data, hora, prioridade, categoria e pessoa envolvida a partir do texto.</p>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h3>Estrutura</h3>
+        <p>A tarefa entra já organizada no board da Tonic, pronta a atribuir e a acompanhar.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="kicker">Próximos passos</div>
+    <h2>Como isto encaixa na Tonic</h2>
+    <ul>
+      <li><b>Motor real de IA</b> — este protótipo usa um interpretador local para a demonstração; em produção liga-se a um modelo de linguagem para maior robustez em frases ambíguas.</li>
+      <li><b>Categorias configuráveis</b> — a lista de categorias e prioridades adapta-se ao vocabulário e fluxo já usados pelas equipas na Tonic.</li>
+      <li><b>Entrada por voz</b> — o mesmo interpretador serve texto transcrito, permitindo criar tarefas a falar.</li>
+      <li><b>Revisão antes de guardar</b> — o utilizador confirma ou corrige os campos extraídos antes da tarefa ser criada, mantendo controlo total.</li>
+    </ul>
+    <div class="signoff">Protótipo interativo preparado para apresentação à equipa Tonic.</div>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
