@@ -214,7 +214,7 @@ textarea:focus{outline:2px solid var(--violet); outline-offset:1px; border-style
   margin-top:64px; border-top:1px solid var(--line); padding-top:32px;
 }
 .closing ul{margin:16px 0 0; padding-left:0; list-style:none; display:flex; flex-direction:column; gap:10px;}
-.closing li{display:flex; gap:10px; font-size:14.5px; line-height:1.55; color:var(--ink-soft);}
-.closing li::before{content:"→"; color:var(--violet); flex:none; font-weight:600;}
+.closing li{font-size:14.5px; line-height:1.55; color:var(--ink-soft);}
+.closing li::before{content:"→"; color:var(--violet); font-weight:600; margin-right:10px;}
 .closing li b{color:var(--ink);}
 .signoff{margin-top:28px; font-size:13px; color:var(--ink-soft);}
