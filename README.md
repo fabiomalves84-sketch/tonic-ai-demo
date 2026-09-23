@@ -4,14 +4,16 @@ Protótipo interativo de uma funcionalidade de IA: transforma uma frase em lingu
 
 Preparado como demonstração para uma proposta apresentada à equipa da Tonic.
 
+**Demo ao vivo:** https://fabiomalves84-sketch.github.io/tonic-ai-demo/
+
 ## Experimentar
 
 Não há build nem dependências — é HTML/CSS/JS puro.
 
-1. Clona o repositório
-2. Abre `index.html` diretamente no browser (duplo clique, ou `open index.html` no macOS)
+- Abre o link do demo ao vivo acima, ou
+- Clona o repositório e abre `index.html` diretamente no browser (duplo clique, ou `open index.html` no macOS)
 
-Ou publica a pasta em qualquer alojamento de sites estáticos (GitHub Pages, Netlify, Vercel) — não há passo de build a configurar.
+A página está publicada via GitHub Pages diretamente a partir da branch `main` — qualquer push atualiza o site automaticamente, sem passo de build.
 
 Experimenta escrever frases como:
 
