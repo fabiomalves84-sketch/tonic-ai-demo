@@ -29,9 +29,9 @@ script.js    — lógica de interpretação de linguagem e interação
 
 ## Como funciona
 
-Todo o processamento corre no browser — nenhum texto escrito sai do dispositivo nem é enviado a um servidor.
+Por omissão, todo o processamento corre no browser — nenhum texto escrito sai do dispositivo nem é enviado a um servidor.
 
-O interpretador em `script.js` usa expressões regulares para reconhecer, em português (com ou sem acentos):
+O interpretador local em `script.js` usa expressões regulares para reconhecer, em português (com ou sem acentos):
 
 - **Data** — hoje, amanhã, depois de amanhã, dias da semana
 - **Hora** — formatos `15h`, `15h30` e `15:30`
@@ -39,11 +39,23 @@ O interpretador em `script.js` usa expressões regulares para reconhecer, em por
 - **Categoria** — reunião, chamada, documento, comunicação, ou tarefa genérica
 - **Responsável** — nomes próprios após "com o/a", ou palavras-chave como "cliente", "fornecedor", "equipa"
 
+## Modo opcional: IA real (LLM)
+
+A página tem um botão "IA real: desligada" por cima da demo. Ao ligá-lo (depois de configurar uma chave de API da Anthropic), os pedidos passam a ser interpretados por um modelo de linguagem real em vez do interpretador local por regras.
+
+Pontos importantes sobre este modo:
+
+- **Está desligado por omissão.** Sem configurar uma chave, a página funciona exactamente como descrito acima — só local.
+- **A chave fica só no teu browser** (`localStorage`), nunca é escrita em nenhum ficheiro do repositório nem passa por nós.
+- **Ligar este modo muda a forma como os dados são tratados** — o texto que escreves passa a ser enviado diretamente do browser para a API da Anthropic. Isto é diferente da afirmação "nenhum texto sai do dispositivo" feita acima, que só é válida com o modo desligado.
+- **Falha graciosamente.** Se a chamada à IA falhar por qualquer razão (chave inválida, rede em baixo, limite de utilização), a página cai automaticamente para o interpretador local e avisa visualmente — a demo nunca fica bloqueada a meio de uma apresentação.
+- Este modo chama a API diretamente do browser (não há servidor próprio), pelo que a chave circula em pedidos de rede visíveis a quem inspecionar o tráfego dessa página — aceitável para uma demonstração pessoal, não para produção.
+
 ## Limitações conhecidas
 
 Este é um protótipo de demonstração, não um produto final:
 
-- O interpretador é baseado em regras (regex), não num modelo de linguagem — funciona bem nos padrões testados, mas frases muito fora do comum podem não ser reconhecidas corretamente
+- Por omissão o interpretador é baseado em regras (regex), não num modelo de linguagem — funciona bem nos padrões testados, mas frases muito fora do comum podem não ser reconhecidas corretamente (o modo "IA real" opcional, acima, resolve isto à custa de deixar de ser 100% local)
 - A extração de nomes de pessoas exige que estejam escritos com maiúscula inicial
 - Não há persistência: as tarefas criadas desaparecem ao recarregar a página
 
@@ -51,7 +63,7 @@ O deck de apresentação completo (contexto, esforço estimado e princípios de 
 
 ## Licença
 
-Todos os direitos reservados. Este repositório contém material de proposta comercial preparado para uma empresa específica e não está licenciado para reutilização — não inclui uma licença open source de propósito geral. Se quiseres tornar este código reutilizável por terceiros, adiciona um ficheiro `LICENSE` (por exemplo MIT) antes de tornar o repositório público.
+Todos os direitos reservados. Este repositório contém material de proposta comercial preparado para uma empresa específica — está publicamente visível, mas não está licenciado para reutilização (não inclui uma licença open source de propósito geral). Se quiseres permitir reutilização por terceiros, adiciona um ficheiro `LICENSE` (por exemplo MIT).
 
 ## Autor
 

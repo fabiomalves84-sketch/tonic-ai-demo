@@ -23,12 +23,28 @@
     <h2>Escreve como falas. A Tonic organiza.</h2>
     <p class="lead">Sem formulários, sem menus. O utilizador escreve uma frase natural e a IA cria a tarefa já preenchida — pronta para entrar no board da equipa.</p>
 
+    <div class="ai-toggle-row">
+      <button type="button" class="ai-toggle" id="aiToggle">IA real: desligada</button>
+      <button type="button" class="ai-settings-link" id="aiSettingsLink">configurar chave API</button>
+    </div>
+    <div class="ai-settings-panel" id="aiSettingsPanel" hidden>
+      <p class="ai-note">A chave fica guardada só neste browser (localStorage) — nunca é enviada para nós, nem gravada no repositório. É usada apenas para chamar a API da Anthropic diretamente a partir desta página. Nota: isto significa que o texto que escreveres passa a sair do dispositivo enquanto a IA real estiver ligada.</p>
+      <input type="password" id="apiKeyInput" class="mono" placeholder="sk-ant-..." autocomplete="off">
+      <div class="ai-settings-actions">
+        <button type="button" class="btn-secondary" id="saveKeyBtn">Guardar chave</button>
+        <button type="button" class="btn-secondary" id="clearKeyBtn" hidden>Remover chave</button>
+      </div>
+    </div>
+
     <div class="demo-grid">
       <div class="panel">
         <div class="panel-label">Entrada — linguagem natural</div>
         <textarea id="input" class="mono" placeholder="ex: liga ao fornecedor amanhã às 10h, prioridade alta"></textarea>
         <div class="chips" id="chips"></div>
-        <button class="btn" id="submit">Criar tarefa com IA →</button>
+        <div class="submit-row">
+          <button class="btn" id="submit">Criar tarefa com IA →</button>
+          <span class="ai-status" id="aiStatus"></span>
+        </div>
       </div>
 
       <div class="panel">
