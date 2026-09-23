@@ -302,6 +302,17 @@
     });
   }
 
+  var toggleVisBtn = document.getElementById('toggleKeyVisibility');
+  if(toggleVisBtn){
+    toggleVisBtn.addEventListener('click', function(){
+      var keyInput = document.getElementById('apiKeyInput');
+      var showing = keyInput.type === 'text';
+      keyInput.type = showing ? 'password' : 'text';
+      toggleVisBtn.textContent = showing ? 'Mostrar' : 'Ocultar';
+      toggleVisBtn.setAttribute('aria-label', showing ? 'Mostrar chave' : 'Ocultar chave');
+    });
+  }
+
   document.getElementById('submit').addEventListener('click', async function(){
     var input = document.getElementById('input');
     var val = input.value.trim();

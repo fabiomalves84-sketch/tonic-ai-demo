@@ -120,11 +120,20 @@ main{max-width:920px; margin-inline:auto;}
 }
 .ai-settings-panel[hidden]{display:none;}
 .ai-note{font-size:12.5px; line-height:1.6; color:var(--ink-soft); margin:0;}
-.ai-settings-panel input[type="password"]{
-  width:100%; font-size:13px; padding:9px 12px;
+.ai-key-field{display:flex; gap:8px; align-items:stretch;}
+.ai-key-field input{
+  flex:1; min-width:0; font-size:13px; padding:9px 12px;
   border:1px solid var(--line); border-radius:8px;
   background:transparent; color:var(--ink);
 }
+.key-visibility-toggle{
+  flex:none;
+  font-family:'JetBrains Mono', monospace; font-size:12px;
+  background:transparent; color:var(--ink-soft);
+  border:1px solid var(--line); border-radius:8px;
+  padding:0 12px; cursor:pointer;
+}
+.key-visibility-toggle:hover{border-color:var(--violet); color:var(--violet);}
 .ai-settings-actions{display:flex; gap:10px;}
 .btn-secondary{
   font-family:'Work Sans', sans-serif; font-weight:600; font-size:13px;
