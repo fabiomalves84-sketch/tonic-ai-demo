@@ -24,9 +24,13 @@ Experimenta escrever frases como:
 ## Estrutura
 
 ```
-index.html   — estrutura da página
-style.css    — identidade visual (tema claro/escuro automático)
-script.js    — lógica de interpretação de linguagem e interação
+index.html        — estrutura da página
+style.css         — identidade visual (tema claro/escuro automático)
+parser.js         — interpretador de frases e pedido ao modelo (partilhado pela página e pela avaliação)
+script.js         — interação e desenho da página
+eval/casos.json   — 82 frases com o resultado esperado
+eval/run.py       — mede o interpretador (local ou com modelo)
+eval/RESULTADOS.md — resultados e limites da medição
 ```
 
 ## Como funciona
@@ -53,12 +57,19 @@ Pontos importantes sobre este modo:
 - **Falha graciosamente.** Se a chamada à IA falhar por qualquer razão (chave inválida, rede em baixo, limite de utilização), a página cai automaticamente para o interpretador local e avisa visualmente — a demo nunca fica bloqueada a meio de uma apresentação.
 - Este modo chama a API diretamente do browser (não há servidor próprio), pelo que a chave circula em pedidos de rede visíveis a quem inspecionar o tráfego dessa página — aceitável para uma demonstração pessoal, não para produção.
 
+## Avaliação
+
+O interpretador é medido contra 82 frases em português, com `python3 eval/run.py` (precisa do macOS, que traz o `jsc`). Em 20 frases escritas depois das primeiras correções e corridas uma só vez, o interpretador original acertava 10 (50%) e o atual acertou 17 (85%) antes dos últimos ajustes. Os números por campo, o que ficou por corrigir e porque os 100% atuais não são uma previsão estão em [eval/RESULTADOS.md](eval/RESULTADOS.md).
+
+O modo com modelo também se mede (`python3 eval/run.py --llm`, com `ANTHROPIC_API_KEY`), mas essa comparação ainda não foi feita.
+
 ## Limitações conhecidas
 
 Este é um protótipo de demonstração, não um produto final:
 
-- Por omissão o interpretador é baseado em regras (regex), não num modelo de linguagem — funciona bem nos padrões testados, mas frases muito fora do comum podem não ser reconhecidas corretamente (o modo "IA real" opcional, acima, resolve isto à custa de deixar de ser 100% local)
-- A extração de nomes de pessoas exige que estejam escritos com maiúscula inicial
+- Por omissão o interpretador é baseado em regras (regex), não num modelo de linguagem. Formas livres como "adiar de quarta para quinta" ou abreviaturas como "seg" falham (ver [eval/RESULTADOS.md](eval/RESULTADOS.md)). O modo "IA real" opcional deve resolver mais casos, à custa de deixar de ser 100% local
+- Datas só como "hoje", "amanhã", "depois de amanhã" e dias da semana: "dia 15", "próxima semana" e "daqui a 2 horas" não são suportados
+- A frase tem de ser uma só tarefa
 - Não há persistência: as tarefas criadas desaparecem ao recarregar a página
 
 O deck de apresentação completo (contexto, esforço estimado e princípios de tratamento de dados para produção) não faz parte deste repositório — vive à parte, como material de apresentação.
