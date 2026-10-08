@@ -1,5 +1,5 @@
 {
- "descricao": "Frases em português com o resultado que uma pessoa esperaria. Listas indicam respostas igualmente aceitáveis. 'data' usa descritores relativos (hoje, amanha, depois_de_amanha ou dia da semana) resolvidos contra uma data fixa. Escrito antes de correr o interpretador. 'dev' serviu para afinar; 'teste' foi reservado para medir. 'dificil' reúne frases mais livres (abreviaturas, 'às 3 da tarde', 'meio-dia', inglês), escritas de propósito para ficarem fora do que o interpretador cobria. 'novo' foi escrito depois das correções do interpretador, sem as ver, e corrido uma só vez: é a única medida que não foi afinada com as falhas.",
+ "descricao": "Frases em português com o resultado que uma pessoa esperaria. Listas indicam respostas igualmente aceitáveis. 'data' usa descritores relativos (hoje, amanha, depois_de_amanha ou dia da semana) resolvidos contra uma data fixa. Escrito antes de correr o interpretador. 'dev' serviu para afinar; 'teste' foi reservado para medir. 'dificil' reúne frases mais livres (abreviaturas, 'às 3 da tarde', 'meio-dia', inglês), escritas de propósito para ficarem fora do que o interpretador cobria. 'novo' foi escrito depois das correções do interpretador, sem as ver, e corrido uma só vez: é a única medida que não foi afinada com as falhas. 'novo2' (20), 'datas' (8) e 'varias' (6 frases com duas tarefas) foram escritos antes de implementar as funcionalidades correspondentes e medidos antes e depois. 'novo3' foi escrito depois das funcionalidades de datas e de várias tarefas, sem ver o código, e corrido uma só vez.",
  "data_referencia": "2026-10-07T10:00:00",
  "casos": [
   {
@@ -1348,6 +1348,1042 @@
      "eletricista"
     ]
    }
+  },
+  {
+   "id": "M01",
+   "grupo": "novo2",
+   "texto": "ligar ao Vasco amanhã às 10h",
+   "esperado": {
+    "categoria": "Chamada",
+    "prioridade": "Normal",
+    "data": "amanha",
+    "hora": "10h00",
+    "pessoa": "Vasco",
+    "titulo_contem": [
+     "vasco"
+    ]
+   }
+  },
+  {
+   "id": "M02",
+   "grupo": "novo2",
+   "texto": "reunião de equipa quinta às 9h30, prioridade alta",
+   "esperado": {
+    "categoria": "Reunião",
+    "prioridade": "Alta",
+    "data": "quinta",
+    "hora": "9h30",
+    "pessoa": "Equipa",
+    "titulo_contem": [
+     "equipa"
+    ]
+   }
+  },
+  {
+   "id": "M03",
+   "grupo": "novo2",
+   "texto": "enviar o relatório de agosto à Teresa até sexta",
+   "esperado": {
+    "categoria": [
+     "Documento",
+     "Comunicação"
+    ],
+    "prioridade": "Normal",
+    "data": "sexta",
+    "hora": null,
+    "pessoa": "Teresa",
+    "titulo_contem": [
+     "relatório"
+    ]
+   }
+  },
+  {
+   "id": "M04",
+   "grupo": "novo2",
+   "texto": "marcar almoço com o cliente Freitas na terça",
+   "esperado": {
+    "categoria": [
+     "Reunião",
+     "Tarefa"
+    ],
+    "prioridade": "Normal",
+    "data": "terca",
+    "hora": null,
+    "pessoa": "Cliente Freitas",
+    "titulo_contem": [
+     "freitas"
+    ]
+   }
+  },
+  {
+   "id": "M05",
+   "grupo": "novo2",
+   "texto": "lembra-me de ligar ao contabilista hoje, urgente",
+   "esperado": {
+    "categoria": "Chamada",
+    "prioridade": "Alta",
+    "data": "hoje",
+    "hora": null,
+    "pessoa": null,
+    "titulo_contem": [
+     "contabilista"
+    ]
+   }
+  },
+  {
+   "id": "M06",
+   "grupo": "novo2",
+   "texto": "preparar a proposta para o cliente Rocha amanhã às 11h",
+   "esperado": {
+    "categoria": "Documento",
+    "prioridade": "Normal",
+    "data": "amanha",
+    "hora": "11h00",
+    "pessoa": "Cliente Rocha",
+    "titulo_contem": [
+     "proposta"
+    ]
+   }
+  },
+  {
+   "id": "M07",
+   "grupo": "novo2",
+   "texto": "escrever à equipa sobre o novo processo",
+   "esperado": {
+    "categoria": "Comunicação",
+    "prioridade": "Normal",
+    "data": null,
+    "hora": null,
+    "pessoa": "Equipa",
+    "titulo_contem": [
+     "processo"
+    ]
+   }
+  },
+  {
+   "id": "M08",
+   "grupo": "novo2",
+   "texto": "reunião com o Eng. Batista quarta às 15h",
+   "esperado": {
+    "categoria": "Reunião",
+    "prioridade": "Normal",
+    "data": "quarta",
+    "hora": "15h00",
+    "pessoa": [
+     "Eng. Batista",
+     "Batista"
+    ],
+    "titulo_contem": [
+     "batista"
+    ]
+   }
+  },
+  {
+   "id": "M09",
+   "grupo": "novo2",
+   "texto": "agendar chamada com a Dra. Leonor segunda às 9h",
+   "esperado": {
+    "categoria": "Chamada",
+    "prioridade": "Normal",
+    "data": "segunda",
+    "hora": "9h00",
+    "pessoa": [
+     "Dra. Leonor",
+     "Leonor"
+    ],
+    "titulo_contem": [
+     "leonor"
+    ]
+   }
+  },
+  {
+   "id": "M10",
+   "grupo": "novo2",
+   "texto": "rever a minuta do contrato até quinta, prioridade média",
+   "esperado": {
+    "categoria": [
+     "Documento",
+     "Tarefa"
+    ],
+    "prioridade": "Média",
+    "data": "quinta",
+    "hora": null,
+    "pessoa": null,
+    "titulo_contem": [
+     "minuta"
+    ]
+   }
+  },
+  {
+   "id": "M11",
+   "grupo": "novo2",
+   "texto": "telefonar ao fornecedor Matias amanhã de manhã",
+   "esperado": {
+    "categoria": "Chamada",
+    "prioridade": "Normal",
+    "data": "amanha",
+    "hora": null,
+    "pessoa": "Fornecedor Matias",
+    "titulo_contem": [
+     "matias"
+    ]
+   }
+  },
+  {
+   "id": "M12",
+   "grupo": "novo2",
+   "texto": "organizar a festa de Natal da equipa sem pressa",
+   "esperado": {
+    "categoria": [
+     "Tarefa",
+     "Reunião"
+    ],
+    "prioridade": "Baixa",
+    "data": null,
+    "hora": null,
+    "pessoa": "Equipa",
+    "titulo_contem": [
+     "natal"
+    ]
+   }
+  },
+  {
+   "id": "M13",
+   "grupo": "novo2",
+   "texto": "enviar fatura à Maria João hoje às 17h",
+   "esperado": {
+    "categoria": [
+     "Documento",
+     "Comunicação"
+    ],
+    "prioridade": "Normal",
+    "data": "hoje",
+    "hora": "17h00",
+    "pessoa": "Maria João",
+    "titulo_contem": [
+     "fatura"
+    ]
+   }
+  },
+  {
+   "id": "M14",
+   "grupo": "novo2",
+   "texto": "marcar reunião com a Ana e o Diogo para sexta às 14h",
+   "esperado": {
+    "categoria": "Reunião",
+    "prioridade": "Normal",
+    "data": "sexta",
+    "hora": "14h00",
+    "pessoa": [
+     "Ana e Diogo",
+     "Ana"
+    ],
+    "titulo_contem": [
+     "reunião"
+    ]
+   }
+  },
+  {
+   "id": "M15",
+   "grupo": "novo2",
+   "texto": "lembra-me de renovar a carta de condução",
+   "esperado": {
+    "categoria": "Tarefa",
+    "prioridade": "Normal",
+    "data": null,
+    "hora": null,
+    "pessoa": null,
+    "titulo_contem": [
+     "carta"
+    ]
+   }
+  },
+  {
+   "id": "M16",
+   "grupo": "novo2",
+   "texto": "mensagem ao cliente Esteves a confirmar a entrega amanhã",
+   "esperado": {
+    "categoria": "Comunicação",
+    "prioridade": "Normal",
+    "data": "amanha",
+    "hora": null,
+    "pessoa": "Cliente Esteves",
+    "titulo_contem": [
+     "entrega"
+    ]
+   }
+  },
+  {
+   "id": "M17",
+   "grupo": "novo2",
+   "texto": "apresentação do orçamento à direção na quarta às 10h",
+   "esperado": {
+    "categoria": "Documento",
+    "prioridade": "Normal",
+    "data": "quarta",
+    "hora": "10h00",
+    "pessoa": null,
+    "titulo_contem": [
+     "orçamento"
+    ]
+   }
+  },
+  {
+   "id": "M18",
+   "grupo": "novo2",
+   "texto": "ligar à Clara depois da reunião de sexta",
+   "esperado": {
+    "categoria": [
+     "Chamada",
+     "Tarefa"
+    ],
+    "prioridade": "Normal",
+    "data": "sexta",
+    "hora": null,
+    "pessoa": "Clara",
+    "titulo_contem": [
+     "clara"
+    ]
+   }
+  },
+  {
+   "id": "M19",
+   "grupo": "novo2",
+   "texto": "preparar o dossier para a auditoria, é urgente",
+   "esperado": {
+    "categoria": [
+     "Documento",
+     "Tarefa"
+    ],
+    "prioridade": "Alta",
+    "data": null,
+    "hora": null,
+    "pessoa": null,
+    "titulo_contem": [
+     "dossier"
+    ]
+   }
+  },
+  {
+   "id": "M20",
+   "grupo": "novo2",
+   "texto": "falar com o Nuno sobre o orçamento hoje às 16h30",
+   "esperado": {
+    "categoria": [
+     "Reunião",
+     "Chamada",
+     "Tarefa"
+    ],
+    "prioridade": "Normal",
+    "data": "hoje",
+    "hora": "16h30",
+    "pessoa": "Nuno",
+    "titulo_contem": [
+     "orçamento"
+    ]
+   }
+  },
+  {
+   "id": "X01",
+   "grupo": "datas",
+   "texto": "entregar o relatório no dia 15",
+   "esperado": {
+    "categoria": [
+     "Documento",
+     "Tarefa"
+    ],
+    "prioridade": "Normal",
+    "data": "dia:15",
+    "hora": null,
+    "pessoa": null,
+    "titulo_contem": [
+     "relatório"
+    ]
+   }
+  },
+  {
+   "id": "X02",
+   "grupo": "datas",
+   "texto": "reunião com a equipa na próxima semana",
+   "esperado": {
+    "categoria": "Reunião",
+    "prioridade": "Normal",
+    "data": "proxima_semana",
+    "hora": null,
+    "pessoa": "Equipa",
+    "titulo_contem": [
+     "reunião"
+    ]
+   }
+  },
+  {
+   "id": "X03",
+   "grupo": "datas",
+   "texto": "ligar ao Marco daqui a 3 dias",
+   "esperado": {
+    "categoria": "Chamada",
+    "prioridade": "Normal",
+    "data": "dias:3",
+    "hora": null,
+    "pessoa": "Marco",
+    "titulo_contem": [
+     "marco"
+    ]
+   }
+  },
+  {
+   "id": "X04",
+   "grupo": "datas",
+   "texto": "pagar o seguro no dia 20 às 9h",
+   "esperado": {
+    "categoria": "Tarefa",
+    "prioridade": "Normal",
+    "data": "dia:20",
+    "hora": "9h00",
+    "pessoa": null,
+    "titulo_contem": [
+     "seguro"
+    ]
+   }
+  },
+  {
+   "id": "X05",
+   "grupo": "datas",
+   "texto": "enviar a proposta ao cliente Lopes daqui a 2 dias",
+   "esperado": {
+    "categoria": [
+     "Documento",
+     "Comunicação"
+    ],
+    "prioridade": "Normal",
+    "data": "dias:2",
+    "hora": null,
+    "pessoa": "Cliente Lopes",
+    "titulo_contem": [
+     "proposta"
+    ]
+   }
+  },
+  {
+   "id": "X06",
+   "grupo": "datas",
+   "texto": "marcar reunião com a Rita na próxima semana, prioridade alta",
+   "esperado": {
+    "categoria": "Reunião",
+    "prioridade": "Alta",
+    "data": "proxima_semana",
+    "hora": null,
+    "pessoa": "Rita",
+    "titulo_contem": [
+     "reunião"
+    ]
+   }
+  },
+  {
+   "id": "X07",
+   "grupo": "datas",
+   "texto": "renovar o contrato no dia 12",
+   "esperado": {
+    "categoria": [
+     "Documento",
+     "Tarefa"
+    ],
+    "prioridade": "Normal",
+    "data": "dia:12",
+    "hora": null,
+    "pessoa": null,
+    "titulo_contem": [
+     "contrato"
+    ]
+   }
+  },
+  {
+   "id": "X08",
+   "grupo": "datas",
+   "texto": "adiar a reunião de quarta para quinta",
+   "esperado": {
+    "categoria": [
+     "Reunião",
+     "Tarefa"
+    ],
+    "prioridade": "Normal",
+    "data": "quinta",
+    "hora": null,
+    "pessoa": null,
+    "titulo_contem": [
+     "reunião"
+    ]
+   }
+  },
+  {
+   "id": "P01",
+   "grupo": "varias",
+   "texto": "enviar o relatório ao Carlos hoje e ligar ao João amanhã às 10h",
+   "partes": [
+    {
+     "categoria": [
+      "Documento",
+      "Comunicação"
+     ],
+     "prioridade": "Normal",
+     "data": "hoje",
+     "hora": null,
+     "pessoa": "Carlos",
+     "titulo_contem": [
+      "relatório"
+     ]
+    },
+    {
+     "categoria": "Chamada",
+     "prioridade": "Normal",
+     "data": "amanha",
+     "hora": "10h00",
+     "pessoa": "João",
+     "titulo_contem": [
+      "joão"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "P02",
+   "grupo": "varias",
+   "texto": "marcar reunião com a Rita na sexta às 11h e preparar a apresentação para segunda",
+   "partes": [
+    {
+     "categoria": "Reunião",
+     "prioridade": "Normal",
+     "data": "sexta",
+     "hora": "11h00",
+     "pessoa": "Rita",
+     "titulo_contem": [
+      "rita"
+     ]
+    },
+    {
+     "categoria": [
+      "Documento",
+      "Tarefa"
+     ],
+     "prioridade": "Normal",
+     "data": "segunda",
+     "hora": null,
+     "pessoa": null,
+     "titulo_contem": [
+      "apresentação"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "P03",
+   "grupo": "varias",
+   "texto": "ligar ao fornecedor Dias hoje, urgente, e enviar a encomenda à equipa amanhã",
+   "partes": [
+    {
+     "categoria": "Chamada",
+     "prioridade": "Alta",
+     "data": "hoje",
+     "hora": null,
+     "pessoa": "Fornecedor Dias",
+     "titulo_contem": [
+      "dias"
+     ]
+    },
+    {
+     "categoria": [
+      "Comunicação",
+      "Tarefa"
+     ],
+     "prioridade": "Normal",
+     "data": "amanha",
+     "hora": null,
+     "pessoa": "Equipa",
+     "titulo_contem": [
+      "encomenda"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "P04",
+   "grupo": "varias",
+   "texto": "rever o contrato até quarta e enviar ao cliente Nunes na quinta",
+   "partes": [
+    {
+     "categoria": [
+      "Documento",
+      "Tarefa"
+     ],
+     "prioridade": "Normal",
+     "data": "quarta",
+     "hora": null,
+     "pessoa": null,
+     "titulo_contem": [
+      "contrato"
+     ]
+    },
+    {
+     "categoria": [
+      "Documento",
+      "Comunicação"
+     ],
+     "prioridade": "Normal",
+     "data": "quinta",
+     "hora": null,
+     "pessoa": "Cliente Nunes",
+     "titulo_contem": [
+      "cliente nunes"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "P05",
+   "grupo": "varias",
+   "texto": "telefonar à Sara às 9h e depois reunião com o Paulo às 14h",
+   "partes": [
+    {
+     "categoria": "Chamada",
+     "prioridade": "Normal",
+     "data": null,
+     "hora": "9h00",
+     "pessoa": "Sara",
+     "titulo_contem": [
+      "sara"
+     ]
+    },
+    {
+     "categoria": "Reunião",
+     "prioridade": "Normal",
+     "data": null,
+     "hora": "14h00",
+     "pessoa": "Paulo",
+     "titulo_contem": [
+      "paulo"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "P06",
+   "grupo": "varias",
+   "texto": "comprar café para a equipa sexta e organizar o jantar sem pressa",
+   "partes": [
+    {
+     "categoria": "Tarefa",
+     "prioridade": "Normal",
+     "data": "sexta",
+     "hora": null,
+     "pessoa": "Equipa",
+     "titulo_contem": [
+      "café"
+     ]
+    },
+    {
+     "categoria": [
+      "Tarefa",
+      "Reunião"
+     ],
+     "prioridade": "Baixa",
+     "data": null,
+     "hora": null,
+     "pessoa": null,
+     "titulo_contem": [
+      "jantar"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "Q01",
+   "grupo": "novo3",
+   "texto": "ligar ao Ricardo na terça às 10h30",
+   "esperado": {
+    "categoria": "Chamada",
+    "prioridade": "Normal",
+    "data": "terca",
+    "hora": "10h30",
+    "pessoa": "Ricardo",
+    "titulo_contem": [
+     "ricardo"
+    ]
+   }
+  },
+  {
+   "id": "Q02",
+   "grupo": "novo3",
+   "texto": "reunião com a Dra. Alice Sá na quinta às 14h",
+   "esperado": {
+    "categoria": "Reunião",
+    "prioridade": "Normal",
+    "data": "quinta",
+    "hora": "14h00",
+    "pessoa": [
+     "Dra. Alice Sá",
+     "Alice Sá"
+    ],
+    "titulo_contem": [
+     "alice"
+    ]
+   }
+  },
+  {
+   "id": "Q03",
+   "grupo": "novo3",
+   "texto": "enviar o plano ao cliente Moura até dia 18",
+   "esperado": {
+    "categoria": [
+     "Documento",
+     "Comunicação"
+    ],
+    "prioridade": "Normal",
+    "data": "dia:18",
+    "hora": null,
+    "pessoa": "Cliente Moura",
+    "titulo_contem": [
+     "plano"
+    ]
+   }
+  },
+  {
+   "id": "Q04",
+   "grupo": "novo3",
+   "texto": "preparar a reunião de segunda com a equipa de vendas",
+   "esperado": {
+    "categoria": [
+     "Tarefa",
+     "Reunião"
+    ],
+    "prioridade": "Normal",
+    "data": "segunda",
+    "hora": null,
+    "pessoa": "Equipa",
+    "titulo_contem": [
+     "reunião"
+    ]
+   }
+  },
+  {
+   "id": "Q05",
+   "grupo": "novo3",
+   "texto": "mandar os documentos ao Filipe hoje",
+   "esperado": {
+    "categoria": [
+     "Documento",
+     "Comunicação"
+    ],
+    "prioridade": "Normal",
+    "data": "hoje",
+    "hora": null,
+    "pessoa": "Filipe",
+    "titulo_contem": [
+     "documentos"
+    ]
+   }
+  },
+  {
+   "id": "Q06",
+   "grupo": "novo3",
+   "texto": "pedir desculpa ao cliente Oliveira",
+   "esperado": {
+    "categoria": [
+     "Comunicação",
+     "Tarefa"
+    ],
+    "prioridade": "Normal",
+    "data": null,
+    "hora": null,
+    "pessoa": "Cliente Oliveira",
+    "titulo_contem": [
+     "desculpa"
+    ]
+   }
+  },
+  {
+   "id": "Q07",
+   "grupo": "novo3",
+   "texto": "tratar do pagamento ao fornecedor Cunha na sexta",
+   "esperado": {
+    "categoria": "Tarefa",
+    "prioridade": "Normal",
+    "data": "sexta",
+    "hora": null,
+    "pessoa": "Fornecedor Cunha",
+    "titulo_contem": [
+     "pagamento"
+    ]
+   }
+  },
+  {
+   "id": "Q08",
+   "grupo": "novo3",
+   "texto": "marcar reunião com o Hugo às 10h na próxima segunda",
+   "esperado": {
+    "categoria": "Reunião",
+    "prioridade": "Normal",
+    "data": "segunda",
+    "hora": "10h00",
+    "pessoa": "Hugo",
+    "titulo_contem": [
+     "hugo"
+    ]
+   }
+  },
+  {
+   "id": "Q09",
+   "grupo": "novo3",
+   "texto": "revisão de contas com a contabilista Graça amanhã às 16h",
+   "esperado": {
+    "categoria": [
+     "Reunião",
+     "Tarefa"
+    ],
+    "prioridade": "Normal",
+    "data": "amanha",
+    "hora": "16h00",
+    "pessoa": [
+     "Graça",
+     "Contabilista Graça"
+    ],
+    "titulo_contem": [
+     "contas"
+    ]
+   }
+  },
+  {
+   "id": "Q10",
+   "grupo": "novo3",
+   "texto": "lembra-me de levar o portátil para a reunião de quarta",
+   "esperado": {
+    "categoria": "Tarefa",
+    "prioridade": "Normal",
+    "data": "quarta",
+    "hora": null,
+    "pessoa": null,
+    "titulo_contem": [
+     "portátil"
+    ]
+   }
+  },
+  {
+   "id": "Q11",
+   "grupo": "novo3",
+   "texto": "ligar para o escritório do Dr. Santos às 9h",
+   "esperado": {
+    "categoria": "Chamada",
+    "prioridade": "Normal",
+    "data": null,
+    "hora": "9h00",
+    "pessoa": [
+     "Dr. Santos",
+     "Santos"
+    ],
+    "titulo_contem": [
+     "santos"
+    ]
+   }
+  },
+  {
+   "id": "Q12",
+   "grupo": "novo3",
+   "texto": "enviar convites para a festa de sexta à equipa",
+   "esperado": {
+    "categoria": [
+     "Comunicação",
+     "Tarefa"
+    ],
+    "prioridade": "Normal",
+    "data": "sexta",
+    "hora": null,
+    "pessoa": "Equipa",
+    "titulo_contem": [
+     "convites"
+    ]
+   }
+  },
+  {
+   "id": "Q13",
+   "grupo": "novo3",
+   "texto": "ligar ao Bruno e ao Tomás amanhã",
+   "esperado": {
+    "categoria": "Chamada",
+    "prioridade": "Normal",
+    "data": "amanha",
+    "hora": null,
+    "pessoa": [
+     "Bruno e Tomás",
+     "Bruno"
+    ],
+    "titulo_contem": [
+     "bruno"
+    ]
+   }
+  },
+  {
+   "id": "Q14",
+   "grupo": "novo3",
+   "texto": "entrevista com a candidata Vaz quinta às 11h",
+   "esperado": {
+    "categoria": [
+     "Reunião",
+     "Tarefa"
+    ],
+    "prioridade": "Normal",
+    "data": "quinta",
+    "hora": "11h00",
+    "pessoa": [
+     "Candidata Vaz",
+     "Vaz"
+    ],
+    "titulo_contem": [
+     "vaz"
+    ]
+   }
+  },
+  {
+   "id": "Q15",
+   "grupo": "novo3",
+   "texto": "fechar o orçamento de 2027 até dia 30",
+   "esperado": {
+    "categoria": [
+     "Documento",
+     "Tarefa"
+    ],
+    "prioridade": "Normal",
+    "data": "dia:30",
+    "hora": null,
+    "pessoa": null,
+    "titulo_contem": [
+     "orçamento"
+    ]
+   }
+  },
+  {
+   "id": "Q16",
+   "grupo": "novo3",
+   "texto": "marcar dentista para dia 22 às 8h30",
+   "esperado": {
+    "categoria": [
+     "Tarefa",
+     "Reunião"
+    ],
+    "prioridade": "Normal",
+    "data": "dia:22",
+    "hora": "8h30",
+    "pessoa": null,
+    "titulo_contem": [
+     "dentista"
+    ]
+   }
+  },
+  {
+   "id": "Q17",
+   "grupo": "novo3",
+   "texto": "ligar ao Gil daqui a 5 dias, prioridade baixa",
+   "esperado": {
+    "categoria": "Chamada",
+    "prioridade": "Baixa",
+    "data": "dias:5",
+    "hora": null,
+    "pessoa": "Gil",
+    "titulo_contem": [
+     "gil"
+    ]
+   }
+  },
+  {
+   "id": "R01",
+   "grupo": "novo3",
+   "texto": "urgente: ligar ao banco e enviar o comprovativo à Marta hoje",
+   "partes": [
+    {
+     "categoria": "Chamada",
+     "prioridade": "Alta",
+     "data": null,
+     "hora": null,
+     "pessoa": null,
+     "titulo_contem": [
+      "banco"
+     ]
+    },
+    {
+     "categoria": [
+      "Comunicação",
+      "Documento"
+     ],
+     "prioridade": "Normal",
+     "data": "hoje",
+     "hora": null,
+     "pessoa": "Marta",
+     "titulo_contem": [
+      "comprovativo"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "R02",
+   "grupo": "novo3",
+   "texto": "reunião de arranque às 9h e almoço com o cliente Faria às 13h",
+   "partes": [
+    {
+     "categoria": "Reunião",
+     "prioridade": "Normal",
+     "data": null,
+     "hora": "9h00",
+     "pessoa": null,
+     "titulo_contem": [
+      "arranque"
+     ]
+    },
+    {
+     "categoria": [
+      "Reunião",
+      "Tarefa"
+     ],
+     "prioridade": "Normal",
+     "data": null,
+     "hora": "13h00",
+     "pessoa": "Cliente Faria",
+     "titulo_contem": [
+      "faria"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "R03",
+   "grupo": "novo3",
+   "texto": "enviar o relatório à direção e preparar a apresentação para sexta às 15h",
+   "partes": [
+    {
+     "categoria": [
+      "Documento",
+      "Comunicação"
+     ],
+     "prioridade": "Normal",
+     "data": null,
+     "hora": null,
+     "pessoa": null,
+     "titulo_contem": [
+      "relatório"
+     ]
+    },
+    {
+     "categoria": [
+      "Documento",
+      "Tarefa"
+     ],
+     "prioridade": "Normal",
+     "data": "sexta",
+     "hora": "15h00",
+     "pessoa": null,
+     "titulo_contem": [
+      "apresentação"
+     ]
+    }
+   ]
   }
  ]
 }

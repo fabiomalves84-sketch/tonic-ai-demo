@@ -17,6 +17,9 @@
 
   var P = window.TonicParser;
   var parseTask = P.parseTask;
+  var tasks = [];
+  var TASKS_KEY = 'tonic_tasks';
+  var MAX_TASKS = 30;
 
   function safeGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
   function safeSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
@@ -60,8 +63,31 @@
     return '<span class="field '+(extraClass||'')+'"><b>'+label+':</b> '+esc(value)+'</span>';
   }
 
-  function renderTask(fields){
+  function loadTasks(){
+    var raw = safeGet(TASKS_KEY);
+    if(raw === null) return null;
+    try{
+      var arr = JSON.parse(raw);
+      return Array.isArray(arr) ? arr.slice(-MAX_TASKS) : null;
+    }catch(e){ return null; }
+  }
+
+  function saveTasks(){
+    safeSet(TASKS_KEY, JSON.stringify(tasks.slice(-MAX_TASKS)));
+  }
+
+  function updateClearBtn(){
+    var b = document.getElementById('clearTasks');
+    if(b) b.hidden = tasks.length === 0;
+  }
+
+  function renderTask(fields, skipSave){
     var list = document.getElementById('tasklist');
+    if(!skipSave){
+      tasks.push(fields);
+      saveTasks();
+    }
+    updateClearBtn();
     var card = document.createElement('div');
     card.className = 'task-card';
     var prClass = fields.priority === 'Alta' ? 'priority-alta' : (fields.priority === 'Média' ? 'priority-media' : '');
@@ -174,27 +200,38 @@
     var btn = document.getElementById('submit');
     var statusEl = document.getElementById('aiStatus');
     var useAI = !!safeGet('tonic_api_key') && safeGet('tonic_ai_enabled') === '1';
-    var fields = null;
+    var parts = P.splitTasks(val);
+    var created = [];
+    var fellBack = false;
 
     if(useAI){
       btn.disabled = true;
       if(statusEl) statusEl.textContent = 'A pensar…';
-      try{
-        fields = await parseTaskWithLLM(val);
-      }catch(e){
-        fields = null;
+    }
+    for(var i = 0; i < parts.length; i++){
+      var fields = null;
+      if(useAI){
+        try{
+          fields = await parseTaskWithLLM(parts[i]);
+        }catch(e){
+          fields = null;
+        }
       }
-      btn.disabled = false;
+      if(!fields){
+        if(useAI) fellBack = true;
+        fields = parseTask(parts[i]);
+      }
+      created.push(fields);
     }
+    btn.disabled = false;
 
-    if(!fields){
-      if(statusEl) statusEl.textContent = useAI ? 'IA real indisponível — usei o interpretador local.' : '';
-      fields = parseTask(val);
-    } else if(statusEl){
-      statusEl.textContent = '';
+    // a ordem de inserção mantém a primeira tarefa da frase por cima
+    for(var j = created.length - 1; j >= 0; j--){ renderTask(created[j]); }
+    if(statusEl){
+      var msg = fellBack ? 'IA real indisponível — usei o interpretador local.' : '';
+      if(created.length > 1) msg = (msg ? msg + ' ' : '') + created.length + ' tarefas criadas.';
+      statusEl.textContent = msg;
     }
-
-    renderTask(fields);
     input.value = '';
     input.focus();
   });
@@ -206,7 +243,24 @@
 
   updateAIUI();
 
-  // seed with two example tasks so the panel opens non-empty
-  renderTask(parseTask('cria uma tarefa para preparar a apresentação para segunda, prioridade média'));
-  renderTask(parseTask('marca reunião com o cliente Sousa amanhã às 9h30, urgente'));
+  var clearBtnTasks = document.getElementById('clearTasks');
+  if(clearBtnTasks){
+    clearBtnTasks.addEventListener('click', function(){
+      tasks = [];
+      saveTasks();
+      document.getElementById('tasklist').textContent = '';
+      updateClearBtn();
+    });
+  }
+
+  // Tarefas guardadas no browser; na primeira visita abre com dois exemplos para o painel não estar vazio.
+  var saved = loadTasks();
+  if(saved === null){
+    renderTask(parseTask('cria uma tarefa para preparar a apresentação para segunda, prioridade média'));
+    renderTask(parseTask('marca reunião com o cliente Sousa amanhã às 9h30, urgente'));
+  } else {
+    tasks = saved;
+    saved.forEach(function(f){ renderTask(f, true); });
+  }
+  updateClearBtn();
 })();

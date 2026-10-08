@@ -59,7 +59,7 @@ Pontos importantes sobre este modo:
 
 ## Avaliação
 
-O interpretador é medido contra 82 frases em português, com `python3 eval/run.py` (precisa do macOS, que traz o `jsc`). Em 20 frases escritas depois das primeiras correções e corridas uma só vez, o interpretador original acertava 10 (50%) e o atual acertou 17 (85%) antes dos últimos ajustes. Os números por campo, o que ficou por corrigir e porque os 100% atuais não são uma previsão estão em [eval/RESULTADOS.md](eval/RESULTADOS.md).
+O interpretador é medido contra 136 frases em português, com `python3 eval/run.py` (precisa do macOS, que traz o `jsc`). Na medida mais limpa, 23 frases escritas depois das últimas funcionalidades e corridas uma só vez, o interpretador original acertava 4, e o atual acerta 17 (74%). Os números por conjunto, as falhas que ficam e porque os 100% noutros conjuntos não são uma previsão estão em [eval/RESULTADOS.md](eval/RESULTADOS.md).
 
 O modo com modelo também se mede (`python3 eval/run.py --llm`, com `ANTHROPIC_API_KEY`), mas essa comparação ainda não foi feita.
 
@@ -67,12 +67,10 @@ O modo com modelo também se mede (`python3 eval/run.py --llm`, com `ANTHROPIC_A
 
 Este é um protótipo de demonstração, não um produto final:
 
-- Por omissão o interpretador é baseado em regras (regex), não num modelo de linguagem. Formas livres como "adiar de quarta para quinta" ou abreviaturas como "seg" falham (ver [eval/RESULTADOS.md](eval/RESULTADOS.md)). O modo "IA real" opcional deve resolver mais casos, à custa de deixar de ser 100% local
-- Datas só como "hoje", "amanhã", "depois de amanhã" e dias da semana: "dia 15", "próxima semana" e "daqui a 2 horas" não são suportados
-- A frase tem de ser uma só tarefa
-- Não há persistência: as tarefas criadas desaparecem ao recarregar a página
-
-O deck de apresentação completo (contexto, esforço estimado e princípios de tratamento de dados para produção) não faz parte deste repositório — vive à parte, como material de apresentação.
+- Por omissão o interpretador é baseado em regras (regex), não num modelo de linguagem. Construções menos comuns falham (ver [eval/RESULTADOS.md](eval/RESULTADOS.md)). O modo "IA real" opcional deve resolver mais casos, à custa de deixar de ser 100% local
+- Uma frase com várias tarefas ("enviar X hoje e ligar ao Y amanhã") é dividida pelas regras locais; no modo "IA real" cada parte é enviada ao modelo em separado
+- Datas: hoje, amanhã, depois de amanhã, dias da semana, "dia 15", "daqui a 3 dias" e "próxima semana" (a segunda-feira seguinte). Horas relativas e meses por extenso não são suportados
+- As tarefas ficam guardadas no `localStorage` do browser (últimas 30), não numa conta nem entre dispositivos
 
 ## Licença
 
