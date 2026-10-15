@@ -16,3 +16,8 @@ node_modules/
 # Ambiente local
 .env
 .env.local
+
+# Python and private environment files
+__pycache__/
+*.pyc
+.env.*
