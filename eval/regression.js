@@ -1,0 +1,30 @@
+load('parser.js');
+var P = TonicParser, count = 0;
+function test(name, fn){ if(!fn()) throw new Error(name); count++; print('PASS: '+name); }
+var now = new Date(2026, 1, 15, 10);
+test('invalid hour rejected', function(){return P.parseTask('ligar às 25h99',now).time === null;});
+test('midnight accepted',function(){return P.parseTask('ligar às 0h00',now).time === '0h00';});
+test('invalid day rejected',function(){return P.parseTask('ligar dia 32',now).date === null;});
+test('day 31 skips short months',function(){return P.resolveDate('dia:31',now) === 'ter, 31 mar';});
+var valid = {title:'Ligar',category:'Chamada',priority:'Alta',relative_date:'amanha',time:'10:30',fim_do_dia:false,person:null};
+function rejects(change){var data=JSON.parse(JSON.stringify(valid));Object.keys(change).forEach(function(k){data[k]=change[k];});try{P.normalizeLLMText(JSON.stringify(data),'ligar',now);return false;}catch(e){return true;}}
+test('invalid LLM hour rejected',function(){return rejects({time:'24:01'});});
+test('invalid LLM title type rejected',function(){return rejects({title:{x:1}});});
+test('unknown LLM category rejected',function(){return rejects({category:'Inventada'});});
+test('unknown LLM date rejected',function(){return rejects({relative_date:'ontem'});});
+test('oversized LLM title rejected',function(){return rejects({title:new Array(302).join('x')});});
+test('end of day preserves date',function(){var data=JSON.parse(JSON.stringify(valid));data.fim_do_dia=true;return P.normalizeLLMText(JSON.stringify(data),'ligar',now).date===P.resolveDate('amanha',now);});
+print(count+' regression tests passed');
+load('task-model.js');
+var M=TonicTasks;
+test('ISO date includes next year',function(){return P.parseTask('ligar amanhã',new Date(2026,11,31)).dateISO==='2027-01-01';});
+test('ISO invalid leap day rejected',function(){return !M.validDate('2026-02-29');});
+test('ISO leap day accepted',function(){return M.validDate('2028-02-29');});
+test('LLM date includes year',function(){return P.normalizeLLMText(JSON.stringify(valid),'ligar',now).dateISO==='2026-02-16';});
+test('legacy dates keep unknown year',function(){return M.migrate({date:'sex, 16 out'}).dateISO===null;});
+test('legacy completion defaults false',function(){return M.migrate({title:'A'}).completed===false;});
+test('ambiguous phrase asks confirmation',function(){return M.warnings({dateISO:'2026-10-16'},'talvez ligar hoje ou amanhã').length>0;});
+test('CSV escapes quotes and line breaks',function(){return M.csv([{title:'A,"B"\nC'}]).indexOf('"A,""B""\nC"')!==-1;});
+test('CSV neutralizes formula',function(){return M.csv([{title:'=1+1'}]).indexOf("'=/")===-1 && M.csv([{title:'=1+1'}]).indexOf("'=1+1")!==-1;});
+test('clock normalizes both formats',function(){return M.clock('9h30')==='09:30' && M.clock('09:30')==='09:30';});
+print(count+' total regression tests passed');

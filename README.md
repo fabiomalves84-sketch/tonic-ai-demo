@@ -1,81 +1,66 @@
 # Tonic Task Assistant
 
-Protótipo interativo de uma funcionalidade de IA: transforma uma frase em linguagem natural numa tarefa já estruturada (categoria, data, hora, prioridade e responsável), sem formulários nem menus.
+Demonstração em português de uma proposta à equipa Tonic: transformar texto natural em tarefas que o utilizador revê, corrige, guarda e acompanha. Sem integração real com o board.
 
-Preparado como demonstração para uma proposta apresentada à equipa da Tonic.
-
-**Demo ao vivo:** https://fabiomalves84-sketch.github.io/tonic-ai-demo/
+Demo: https://fabiomalves84-sketch.github.io/tonic-ai-demo/
 
 ## Experimentar
 
-Não há build nem dependências — é HTML/CSS/JS puro.
+Sem build nem dependências no frontend. Abrir `index.html` ou servir a pasta por HTTP. GitHub Pages usa apenas o interpretador local: o texto não é enviado a fornecedores de IA.
 
-- Abre o link do demo ao vivo acima, ou
-- Clona o repositório e abre `index.html` diretamente no browser (duplo clique, ou `open index.html` no macOS)
+1. Escolher um exemplo ou escrever uma frase (até 2000 caracteres e 10 tarefas).
+2. Rever título, categoria, data completa, hora, fuso, prioridade e pessoa envolvida. Os avisos destacam alguns casos ambíguos; não são uma estimativa de confiança do modelo.
+3. Confirmar para guardar. Depois é possível editar, concluir e reabrir. As últimas 30 tarefas persistem neste browser.
+4. Exportar JSON (inclui texto original) ou CSV. O CSV protege células que parecem fórmulas.
 
-A página está publicada via GitHub Pages diretamente a partir da branch `main` — qualquer push atualiza o site automaticamente, sem passo de build.
+As tarefas antigas mantêm a data original marcada com «ano por confirmar»; nunca se inventa o ano durante a migração. Datas novas usam ISO YYYY-MM-DD. As horas são locais ao fuso IANA indicado; alterar o fuso não converte a hora nem reinterpreta a frase. Não há lembretes nem agendamento de notificações.
 
-Experimenta escrever frases como:
+## IA opcional com servidor local
 
-- `marca reunião com o cliente Ferreira amanhã às 15h, prioridade alta`
-- `lembra-me de preparar a proposta até sexta`
-- `enviar relatório mensal à equipa até fim do dia, urgente`
+A chave deixou de ser introduzida ou usada no frontend. A versão anterior podia guardar chaves no browser; esta versão remove essas entradas antigas ao carregar.
+
+Para testar IA real, definir `ANTHROPIC_API_KEY` no ambiente do terminal (nunca num ficheiro público ou commit) e executar:
+
+```
+python3 server.py
+```
+
+Abrir **http://127.0.0.1:8766** e ligar «IA real». Só então o texto é enviado à Anthropic e podem existir custos na conta configurada. `ANTHROPIC_API_KEY` ausente mantém a IA indisponível. O modelo configurado é `claude-haiku-4-5-20251001`; a disponibilidade deve ser validada com a conta do utilizador.
+
+O servidor é exclusivamente local, ligado a 127.0.0.1: verifica Host/Origin, limita corpo e tamanho de texto, aceita uma chamada de cada vez, impõe intervalo mínimo e timeout e serve apenas os ficheiros permitidos. Não regista conteúdo, cabeçalhos ou respostas do fornecedor. Falhas fazem o frontend usar regras locais e avisar. Os testes usam fornecedor simulado, sem consumo de tokens.
+
+**Não publicar este servidor de desenvolvimento.** Um serviço público requer alojamento próprio, HTTPS, autenticação, limites e orçamento por utilizador, retenção/privacidade e monitorização. GitHub Pages não executa este backend. Processos ou pessoas com acesso ao mesmo computador não são isolados por estas proteções locais.
+
+## Testes
+
+A partir da pasta do projeto, no macOS:
+
+```
+python3 eval/run.py
+/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc eval/regression.js
+python3 eval/test_server.py
+```
+
+- Avaliação existente: 107/113 casos principais totalmente corretos; conjunto novo3: 17/23. Mais 32 unidades nos grupos datas/varias/dificil corretas. Estes conjuntos não representam toda a linguagem real.
+- 20 testes de regressão: datas/horas, respostas LLM, ano novo, bissextos, migração, ambiguidade e CSV.
+- 7 testes HTTP: página, CSP, ficheiros privados, Host/Origin, falta de chave, entrada inválida e contrato do fornecedor simulado.
+
+## Limitações
+
+O parser por regras ainda falha em algumas pessoas, categorias e frases com várias tarefas. Os avisos são heurísticos e não detetam todas as ambiguidades. Uma pessoa identificada não equivale à atribuição de um responsável. «Fim do dia» não define hora exata e é preservado até ser substituído por uma hora.
+
+Dados locais não são cifrados, não sincronizam e podem perder-se ao limpar o browser. Exportações contêm dados das tarefas; guardar em local apropriado. O limite de 30 descarta os registos mais antigos.
+
+Foram melhorados labels, foco, contraste do cabeçalho claro/escuro, tamanhos dos controlos, reduced-motion e responsividade. Não existe certificação WCAG nem medição de Core Web Vitals. Chamadas reais ao fornecedor não foram executadas nesta revisão.
 
 ## Estrutura
 
-```
-index.html        — estrutura da página
-style.css         — identidade visual (tema claro/escuro automático)
-parser.js         — interpretador de frases e pedido ao modelo (partilhado pela página e pela avaliação)
-script.js         — interação e desenho da página
-eval/casos.json   — 82 frases com o resultado esperado
-eval/run.py       — mede o interpretador (local ou com modelo)
-eval/RESULTADOS.md — resultados e limites da medição
-```
+- `index.html`, `style.css`, `script.js`: interface e interação.
+- `parser.js`: regras e normalização da resposta LLM.
+- `task-model.js`: datas, migração, avisos e exportação CSV.
+- `server.py`: backend exclusivamente local e opcional.
+- `eval/`: avaliação e regressões.
 
-## Como funciona
+## Autor e licença
 
-Por omissão, todo o processamento corre no browser — nenhum texto escrito sai do dispositivo nem é enviado a um servidor.
-
-O interpretador local em `script.js` usa expressões regulares para reconhecer, em português (com ou sem acentos):
-
-- **Data** — hoje, amanhã, depois de amanhã, dias da semana
-- **Hora** — formatos `15h`, `15h30` e `15:30`
-- **Prioridade** — alta/urgente, média, baixa/sem pressa
-- **Categoria** — reunião, chamada, documento, comunicação, ou tarefa genérica
-- **Responsável** — nomes próprios após "com o/a", ou palavras-chave como "cliente", "fornecedor", "equipa"
-
-## Modo opcional: IA real (LLM)
-
-A página tem um botão "IA real: desligada" por cima da demo. Ao ligá-lo (depois de configurar uma chave de API da Anthropic), os pedidos passam a ser interpretados por um modelo de linguagem real em vez do interpretador local por regras.
-
-Pontos importantes sobre este modo:
-
-- **Está desligado por omissão.** Sem configurar uma chave, a página funciona exactamente como descrito acima — só local.
-- **A chave fica só no teu browser** (`localStorage`), nunca é escrita em nenhum ficheiro do repositório nem passa por nós.
-- **Ligar este modo muda a forma como os dados são tratados** — o texto que escreves passa a ser enviado diretamente do browser para a API da Anthropic. Isto é diferente da afirmação "nenhum texto sai do dispositivo" feita acima, que só é válida com o modo desligado.
-- **Falha graciosamente.** Se a chamada à IA falhar por qualquer razão (chave inválida, rede em baixo, limite de utilização), a página cai automaticamente para o interpretador local e avisa visualmente — a demo nunca fica bloqueada a meio de uma apresentação.
-- Este modo chama a API diretamente do browser (não há servidor próprio), pelo que a chave circula em pedidos de rede visíveis a quem inspecionar o tráfego dessa página — aceitável para uma demonstração pessoal, não para produção.
-
-## Avaliação
-
-O interpretador é medido contra 136 frases em português, com `python3 eval/run.py` (precisa do macOS, que traz o `jsc`). Na medida mais limpa, 23 frases escritas depois das últimas funcionalidades e corridas uma só vez, o interpretador original acertava 4, e o atual acerta 17 (74%). Os números por conjunto, as falhas que ficam e porque os 100% noutros conjuntos não são uma previsão estão em [eval/RESULTADOS.md](eval/RESULTADOS.md).
-
-O modo com modelo também se mede (`python3 eval/run.py --llm`, com `ANTHROPIC_API_KEY`), mas essa comparação ainda não foi feita.
-
-## Limitações conhecidas
-
-Este é um protótipo de demonstração, não um produto final:
-
-- Por omissão o interpretador é baseado em regras (regex), não num modelo de linguagem. Construções menos comuns falham (ver [eval/RESULTADOS.md](eval/RESULTADOS.md)). O modo "IA real" opcional deve resolver mais casos, à custa de deixar de ser 100% local
-- Uma frase com várias tarefas ("enviar X hoje e ligar ao Y amanhã") é dividida pelas regras locais; no modo "IA real" cada parte é enviada ao modelo em separado
-- Datas: hoje, amanhã, depois de amanhã, dias da semana, "dia 15", "daqui a 3 dias" e "próxima semana" (a segunda-feira seguinte). Horas relativas e meses por extenso não são suportados
-- As tarefas ficam guardadas no `localStorage` do browser (últimas 30), não numa conta nem entre dispositivos
-
-## Licença
-
-Todos os direitos reservados. Este repositório contém material de proposta comercial preparado para uma empresa específica — está publicamente visível, mas não está licenciado para reutilização (não inclui uma licença open source de propósito geral). Se quiseres permitir reutilização por terceiros, adiciona um ficheiro `LICENSE` (por exemplo MIT).
-
-## Autor
-
-Fábio Alves — Consultor IA
+Fábio Alves — Consultor IA. Todos os direitos reservados. Material de proposta comercial para uma empresa específica; não inclui licença geral de reutilização.
